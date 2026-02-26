@@ -1,0 +1,34 @@
+app-id: com.whatorin.cleanwrapper
+runtime: org.gnome.Platform
+runtime-version: "48"
+sdk: org.gnome.Sdk
+command: com.whatorin.cleanwrapper
+branch: stable
+
+finish-args:
+  - --share=network
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --socket=pulseaudio
+  - --device=dri
+  - --talk-name=org.freedesktop.Notifications
+
+modules:
+  - name: whatorin
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 com.whatorin.cleanwrapper /app/bin/com.whatorin.cleanwrapper
+      - install -Dm644 com.whatorin.cleanwrapper.desktop /app/share/applications/com.whatorin.cleanwrapper.desktop
+      - install -Dm644 com.whatorin.cleanwrapper.appdata.xml /app/share/metainfo/com.whatorin.cleanwrapper.appdata.xml
+      - install -Dm644 com.whatorin.cleanwrapper.png /app/share/icons/hicolor/256x256/apps/com.whatorin.cleanwrapper.png
+    sources:
+      - type: file
+        path: ../../src-tauri/target/release/com.whatorin.cleanwrapper
+      - type: file
+        path: com.whatorin.cleanwrapper.desktop
+      - type: file
+        path: com.whatorin.cleanwrapper.appdata.xml
+      - type: file
+        path: ../../src-tauri/icons/icon.png
+        dest-filename: com.whatorin.cleanwrapper.png

@@ -67,57 +67,66 @@ pub fn run() {
 
     let theme_css = include_str!("../../theme.css");
     let inject_js = include_str!("inject.js");
-    let easter_sound_data_url = format!(
-        "data:audio/ogg;base64,{}",
-        base64::engine::general_purpose::STANDARD
-            .encode(include_bytes!("../../assets/sounds/torin-easter.ogg"))
-    );
     let disable_injection = std::env::var("WHATORIN_DISABLE_INJECTION")
         .map(|v| v == "1" || v.eq_ignore_ascii_case("true"))
         .unwrap_or(false);
+    let lite_mode = std::env::var("WHATORIN_LITE")
+        .map(|v| v == "1" || v.eq_ignore_ascii_case("true"))
+        .unwrap_or(false);
+    let should_inject = !disable_injection && !lite_mode;
 
-    // Combinamos el CSS en un script de inyección más robusto
-    let full_injection = format!(
-        r#"
-        (function() {{
-            function applyTheme() {{
-                if (document.getElementById('whatorin-theme')) return;
-                const style = document.createElement('style');
-                style.id = 'whatorin-theme';
-                style.textContent = `{}`;
-                (document.head || document.documentElement).appendChild(style);
-                console.log('WhaTorin: Tema aplicado.');
-            }}
+    let full_injection = if should_inject {
+        let easter_sound_data_url = format!(
+            "data:audio/ogg;base64,{}",
+            base64::engine::general_purpose::STANDARD
+                .encode(include_bytes!("../../assets/sounds/torin-easter.ogg"))
+        );
 
-            if (document.readyState === 'loading') {{
-                document.addEventListener('DOMContentLoaded', applyTheme);
-            }} else {{
-                applyTheme();
-            }}
-            
-            // Re-aplicar por si WhatsApp limpia el <head>; evitamos observar todo el DOM.
-            let scheduled = false;
-            const observer = new MutationObserver(() => {{
-                if (scheduled) return;
-                scheduled = true;
-                requestAnimationFrame(() => {{
-                    scheduled = false;
-                    if (!document.getElementById('whatorin-theme')) applyTheme();
+        // Combinamos el CSS en un script de inyección más robusto.
+        Some(format!(
+            r#"
+            (function() {{
+                function applyTheme() {{
+                    if (document.getElementById('whatorin-theme')) return;
+                    const style = document.createElement('style');
+                    style.id = 'whatorin-theme';
+                    style.textContent = `{}`;
+                    (document.head || document.documentElement).appendChild(style);
+                    console.log('WhaTorin: Tema aplicado.');
+                }}
+
+                if (document.readyState === 'loading') {{
+                    document.addEventListener('DOMContentLoaded', applyTheme);
+                }} else {{
+                    applyTheme();
+                }}
+
+                // Re-aplicar por si WhatsApp limpia el <head>; evitamos observar todo el DOM.
+                let scheduled = false;
+                const observer = new MutationObserver(() => {{
+                    if (scheduled) return;
+                    scheduled = true;
+                    requestAnimationFrame(() => {{
+                        scheduled = false;
+                        if (!document.getElementById('whatorin-theme')) applyTheme();
+                    }});
                 }});
-            }});
-            const themeRoot = document.head || document.documentElement;
-            observer.observe(themeRoot, {{ childList: true }});
+                const themeRoot = document.head || document.documentElement;
+                observer.observe(themeRoot, {{ childList: true }});
 
-            window.__WHATORIN_EASTER_SOUND_SRC = `{}`;
-            {}
-        }})();
-        "#,
-        theme_css.replace('`', "\\`").replace('$', "\\$"),
-        easter_sound_data_url
-            .replace('`', "\\`")
-            .replace('$', "\\$"),
-        inject_js
-    );
+                window.__WHATORIN_EASTER_SOUND_SRC = `{}`;
+                {}
+            }})();
+            "#,
+            theme_css.replace('`', "\\`").replace('$', "\\$"),
+            easter_sound_data_url
+                .replace('`', "\\`")
+                .replace('$', "\\$"),
+            inject_js
+        ))
+    } else {
+        None
+    };
 
     tauri::Builder::default().setup(move |app| {
             let mut window_builder = WebviewWindowBuilder::new(
@@ -127,11 +136,14 @@ pub fn run() {
             )
             .title("WhaTorin WSP")
             .inner_size(1200.0, 800.0)
-            .decorations(false) // Desactivamos la barra gruesa del sistema
+            // Lite usa decoraciones del sistema (menos JS/UI inyectada).
+            .decorations(lite_mode)
             .user_agent(
                 "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
             )
             .enable_clipboard_access()
+            // Importante: si no se desactiva, Tauri consume el file-drop y la web no recibe drag&drop.
+            .disable_drag_drop_handler()
             .on_page_load(|window, payload| {
                 println!(
                     "[WhaTorin] page_load {:?} {} ({})",
@@ -141,10 +153,14 @@ pub fn run() {
                 );
             });
 
-            if disable_injection {
+            if lite_mode {
+                println!("[WhaTorin] WHATORIN_LITE=1 (low-ram mode)");
+            } else if disable_injection {
                 println!("[WhaTorin] WHATORIN_DISABLE_INJECTION=1 (safe mode)");
-            } else {
-                window_builder = window_builder.initialization_script(&full_injection);
+            }
+
+            if let Some(script) = full_injection.as_ref() {
+                window_builder = window_builder.initialization_script(script);
             }
 
             // En Linux/Wayland conviene fijar el icono antes de crear la ventana.

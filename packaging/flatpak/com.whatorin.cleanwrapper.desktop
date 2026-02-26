@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=WhaTorin
+Comment=WhatsApp wrapper with a clean terminal-style UI
+Exec=com.whatorin.cleanwrapper
+Icon=com.whatorin.cleanwrapper
+Categories=Network;InstantMessaging;
+StartupWMClass=com.whatorin.cleanwrapper
+Terminal=false

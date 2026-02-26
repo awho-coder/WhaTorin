@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.whatorin.cleanwrapper</id>
+  <name>WhaTorin</name>
+  <summary>WhatsApp Web desktop wrapper</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>ISC</project_license>
+  <description>
+    <p>WhaTorin is a lightweight desktop wrapper for WhatsApp Web built with Tauri.</p>
+  </description>
+  <launchable type="desktop-id">com.whatorin.cleanwrapper.desktop</launchable>
+  <provides>
+    <binary>com.whatorin.cleanwrapper</binary>
+  </provides>
+</component>

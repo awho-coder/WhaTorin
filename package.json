@@ -7,9 +7,11 @@
     "start": "electron .",
     "tauri": "tauri",
     "dev": "tauri dev",
+    "dev:lite": "WHATORIN_LITE=1 tauri dev",
     "dev:safe": "WHATORIN_DISABLE_INJECTION=1 tauri dev",
     "build": "tauri build",
     "build:appimage": "NO_STRIP=1 tauri build --bundles appimage",
+    "build:flatpak": "bash scripts/build-flatpak.sh",
     "pack": "electron-builder --linux AppImage",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
