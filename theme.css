@@ -35,8 +35,19 @@
 }
 
 html,
-body,
-#app,
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: var(--term-bg) !important;
+    color: var(--term-text) !important;
+    font-family: "JetBrains Mono", "Fira Code", Consolas, monospace !important;
+}
+
+#app {
+    padding-top: 18px !important;
+    box-sizing: border-box !important;
+}
+
 #main,
 #side,
 [role="main"],
@@ -44,8 +55,8 @@ header,
 footer {
     background: var(--term-bg) !important;
     color: var(--term-text) !important;
-    font-family: "JetBrains Mono", "Fira Code", Consolas, monospace !important;
 }
+
 
 /* keep everything flat and dark */
 header,

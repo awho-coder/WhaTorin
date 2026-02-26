@@ -2,7 +2,6 @@
 
 **WhaTorin** is a lightweight, dedicated desktop wrapper for WhatsApp Web, built with Electron and focused on a minimalist, IRC-style terminal aesthetic.
 
-
 ## ✨ Features
 
 - **Terminal Style:** A custom Flat/Dark IRC theme that removes bubbles, rounded corners, and unnecessary clutter.
