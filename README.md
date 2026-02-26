@@ -2,7 +2,6 @@
 
 **WhaTorin** is a lightweight, dedicated desktop wrapper for WhatsApp Web, built with Electron and focused on a minimalist, IRC-style terminal aesthetic.
 
-![WhaTorin IRC Style](https://raw.githubusercontent.com/awho-coder/WhaTorin/main/assets/preview.png) _(Note: Add a real preview image to your repo!)_
 
 ## ✨ Features
 
