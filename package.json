@@ -1,0 +1,30 @@
+{
+  "name": "whatorin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --linux AppImage",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "build": {
+    "appId": "com.whatorin.cleanwrapper",
+    "productName": "Whatorin WSP",
+    "directories": {
+      "output": "dist"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Network",
+      "icon": "build/icons"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^40.6.1",
+    "electron-builder": "^26.8.1"
+  }
+}

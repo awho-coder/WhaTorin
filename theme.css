@@ -1,0 +1,659 @@
+/* WA Clean Wrapper - Terminal Flat Theme */
+
+:root {
+    --term-bg: #000000;
+    --term-text: #ffffff;
+    --term-dim: #8f8f8f;
+    --term-line: #1a1a1a;
+    --term-hover: #0a0a0a;
+    --term-active: #111111;
+    --term-side-bg: #000000;
+    --term-side-hover: #050505;
+    --term-side-active: #0a0a0a;
+    --term-side-line: #171717;
+    --term-side-accent: #2b2b2b;
+
+    /* WhatsApp Web internal tokens (force dark console) */
+    --app-background: #000000 !important;
+    --panel-background: #000000 !important;
+    --panel-header-background: #000000 !important;
+    --panel-background-deeper: #000000 !important;
+    --search-input-container-background: #000000 !important;
+    --conversation-panel-background: #000000 !important;
+    --conversation-panel-border: #101010 !important;
+    --incoming-background: transparent !important;
+    --incoming-background-deeper: transparent !important;
+    --outgoing-background: transparent !important;
+    --outgoing-background-deeper: transparent !important;
+    --compose-input-background: #000000 !important;
+    --rich-text-panel-background: #000000 !important;
+    --media-viewer-background: #000000 !important;
+    --dropdown-background: #000000 !important;
+    --drawer-background: #000000 !important;
+    --background-default-hover: #0a0a0a !important;
+    --background-default-active: #111111 !important;
+}
+
+html,
+body,
+#app,
+#main,
+#side,
+[role="main"],
+header,
+footer {
+    background: var(--term-bg) !important;
+    color: var(--term-text) !important;
+    font-family: "JetBrains Mono", "Fira Code", Consolas, monospace !important;
+}
+
+/* keep everything flat and dark */
+header,
+footer,
+#side {
+    box-shadow: none !important;
+    border-color: var(--term-line) !important;
+}
+
+#side {
+    background: var(--term-side-bg) !important;
+    border-right: 1px solid var(--term-side-line) !important;
+}
+
+/* chat list */
+#pane-side [role="listitem"],
+#side [role="listitem"] {
+    background: transparent !important;
+    border-bottom: 1px solid var(--term-side-line) !important;
+    padding-left: 10px !important;
+}
+
+#pane-side [role="listitem"]:hover,
+#side [role="listitem"]:hover {
+    background: #000000 !important;
+}
+
+#pane-side [aria-selected="true"],
+#side [aria-selected="true"] {
+    background: #000000 !important;
+    box-shadow: none !important;
+}
+
+/* remove message bubble look */
+[data-testid="msg-container"],
+.message-in [data-testid="msg-container"],
+.message-out [data-testid="msg-container"] {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+/* plain white message text */
+[data-testid="msg-container"] span.selectable-text span,
+[data-testid="msg-container"] div[dir="auto"],
+[data-testid="conversation-info-header-chat-title"],
+[data-testid="cell-frame-title"] {
+    color: var(--term-text) !important;
+}
+
+/* subtle metadata */
+[data-testid="msg-meta"],
+[data-testid="msg-meta"] *,
+[data-testid="chat-list-search"] {
+    color: var(--term-dim) !important;
+}
+
+/* flat input like terminal prompt */
+div[contenteditable="true"] {
+    color: var(--term-text) !important;
+    caret-color: var(--term-text) !important;
+}
+
+footer div[contenteditable="true"] {
+    background: var(--term-bg) !important;
+    border: 1px solid var(--term-line) !important;
+    border-radius: 0 !important;
+}
+
+/* minimal chrome */
+[data-icon="tail-in"],
+[data-icon="tail-out"] {
+    display: none !important;
+}
+
+/* icons and separators in white/gray */
+span[data-icon],
+svg {
+    color: var(--term-text) !important;
+    fill: currentColor !important;
+}
+
+hr {
+    border-color: var(--term-line) !important;
+}
+
+/* media less dominant */
+img,
+video {
+    filter: grayscale(0.2) brightness(0.9);
+}
+
+/* terminal scrollbar */
+*::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #000;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #222;
+    border: 2px solid #000;
+    border-radius: 0;
+}
+
+/* FORCE TERMINAL OVERRIDES (keep at end) */
+html,
+body,
+#app,
+#main,
+[data-testid="chat-list"],
+[data-testid="conversation-panel-wrapper"],
+[data-testid="conversation-panel-body"],
+[data-testid="chat-history"],
+[data-testid="chatlist-header"],
+[data-testid="chatlist-search"],
+[data-testid="conversation-panel-messages"],
+[data-testid="chat-shell"],
+[data-testid="chat-panel"],
+[class*="app-wrapper-web"],
+[class*="two"],
+[class*="pane"],
+[class*="chat"] {
+    background-color: #000 !important;
+    background-image: none !important;
+}
+
+/* remove wallpaper/doodle layers */
+[style*="--chat-background"],
+[style*="background-image"],
+[data-asset-chat-background-dark],
+[data-asset-chat-background-light] {
+    background-image: none !important;
+}
+
+/* kill bubble visuals in all nesting levels */
+.message-in [data-testid="msg-container"],
+.message-out [data-testid="msg-container"],
+.message-in [data-testid="msg-container"] *:not(img):not(svg):not(video),
+.message-out [data-testid="msg-container"] *:not(img):not(svg):not(video) {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+/* keep text readable after aggressive reset */
+.message-in [data-testid="msg-container"] span,
+.message-out [data-testid="msg-container"] span,
+.message-in [data-testid="msg-container"] div,
+.message-out [data-testid="msg-container"] div {
+    color: #fff !important;
+}
+
+/* TERMINAL MESSAGE MODE (no bubbles at all) */
+.message-in,
+.message-out,
+.message-in > div,
+.message-out > div,
+.message-in > div > div,
+.message-out > div > div {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+.message-in [style*="background"]:not(img):not([class*="emoji"]),
+.message-out [style*="background"]:not(img):not([class*="emoji"]) {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* keep WhatsApp sprite emojis visible (reactions + inline emoji) */
+img.emoji.wa,
+img[class*="emoji"][class*="wa"] {
+    filter: none !important;
+}
+
+.message-in [style*="border-radius"],
+.message-out [style*="border-radius"] {
+    border-radius: 0 !important;
+}
+
+.message-in .copyable-text,
+.message-out .copyable-text {
+    display: block !important;
+    margin: 0 !important;
+    padding: 1px 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+}
+
+.message-in .copyable-text::before,
+.message-out .copyable-text::before {
+    content: attr(data-pre-plain-text) " ";
+    color: #8f8f8f !important;
+    font-size: 11px !important;
+    letter-spacing: 0.1px;
+}
+
+/* slightly cleaner terminal alignment */
+[data-testid="msg-container"] {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* COMPOSER POLISH (terminal style) */
+footer {
+    background: #000 !important;
+    border-top: 1px solid #141414 !important;
+    padding: 6px 10px !important;
+}
+
+footer * {
+    border-radius: 0 !important;
+}
+
+footer > div,
+footer > div > div {
+    background: transparent !important;
+}
+
+footer [role="textbox"],
+footer [contenteditable="true"],
+footer [data-testid="conversation-compose-box-input"] {
+    background: #040404 !important;
+    color: #fff !important;
+    border: 1px solid #2b2b2b !important;
+    min-height: 34px !important;
+    padding: 7px 10px !important;
+    box-shadow: none !important;
+}
+
+/* terminal prompt prefix */
+footer div:has(> [contenteditable="true"]),
+footer [data-testid="conversation-compose-box-input"] {
+    position: relative !important;
+}
+
+footer div:has(> [contenteditable="true"])::before,
+footer [data-testid="conversation-compose-box-input"]::before {
+    content: "> ";
+    position: absolute;
+    left: 9px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ffffff !important;
+    opacity: 0.9;
+    font-weight: 700;
+    pointer-events: none;
+    z-index: 2;
+}
+
+footer [contenteditable="true"],
+footer [role="textbox"] {
+    padding-left: 24px !important;
+}
+
+/* hide WhatsApp placeholder ("Escribe un mensaje") */
+footer [contenteditable="true"][data-lexical-editor="true"]::before,
+footer [contenteditable="true"][data-placeholder]::before,
+footer [data-testid="conversation-compose-box-input"] [data-lexical-editor="true"]::before,
+footer [data-testid="conversation-compose-box-input"] [data-placeholder]::before {
+    content: "" !important;
+    display: none !important;
+}
+
+footer [data-lexical-placeholder="true"],
+footer [data-testid="conversation-compose-box-input"] [data-lexical-placeholder="true"] {
+    display: none !important;
+}
+
+/* aggressive placeholder kill */
+footer [data-testid="conversation-compose-box-input"] [data-testid*="placeholder"],
+footer [data-testid="conversation-compose-box-input"] [class*="placeholder"],
+footer [data-testid="conversation-compose-box-input"] [aria-label="Escribe un mensaje"],
+footer [data-testid="conversation-compose-box-input"] [title="Escribe un mensaje"],
+footer [data-testid="conversation-compose-box-input"] [data-placeholder] {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* exact structure from lexical-rich-text-input */
+footer .lexical-rich-text-input > div[aria-hidden="true"] {
+    display: none !important;
+}
+
+footer .lexical-rich-text-input [role="textbox"][aria-placeholder]::before,
+footer .lexical-rich-text-input [contenteditable="true"][aria-placeholder]::before,
+footer .lexical-rich-text-input [role="textbox"][aria-placeholder]:empty::before,
+footer .lexical-rich-text-input [contenteditable="true"][aria-placeholder]:empty::before {
+    content: none !important;
+    display: none !important;
+}
+
+/* keep only editable node visible inside compose input */
+footer [data-testid="conversation-compose-box-input"] > :not([contenteditable="true"]):not([role="textbox"]) {
+    display: none !important;
+}
+
+footer [role="textbox"]:focus,
+footer [contenteditable="true"]:focus,
+footer [data-testid="conversation-compose-box-input"]:focus-within {
+    border-color: #ffffff !important;
+    box-shadow: 0 0 0 1px #ffffff inset !important;
+}
+
+footer button,
+footer [role="button"] {
+    background: transparent !important;
+    border: 1px solid #1f1f1f !important;
+    color: #fff !important;
+    box-shadow: none !important;
+}
+
+footer button:hover,
+footer [role="button"]:hover {
+    background: #0a0a0a !important;
+    border-color: #3a3a3a !important;
+}
+
+footer [data-icon],
+footer svg {
+    color: #f2f2f2 !important;
+    fill: currentColor !important;
+}
+
+/* SIDEBAR CONSOLE GREEN OVERRIDE */
+#side,
+#pane-side,
+[data-testid="chat-list"] {
+    background: var(--term-side-bg) !important;
+    background-color: var(--term-side-bg) !important;
+}
+
+#pane-side [role="listitem"],
+#side [role="listitem"] {
+    border-bottom: 1px solid var(--term-side-line) !important;
+}
+
+#pane-side [role="listitem"]:hover,
+#side [role="listitem"]:hover {
+    background: #000000 !important;
+}
+
+#pane-side [aria-selected="true"],
+#side [aria-selected="true"] {
+    background: #000000 !important;
+    box-shadow: none !important;
+}
+
+/* SIDEBAR TEXT-ONLY MODE */
+#side [role="listitem"] img,
+#side [role="listitem"] svg,
+#side [role="listitem"] [data-icon],
+#side [role="listitem"] [data-testid*="avatar"],
+#side [role="listitem"] [data-testid*="status"],
+#side [role="listitem"] [data-testid*="unread"],
+#pane-side [role="listitem"] img,
+#pane-side [role="listitem"] svg,
+#pane-side [role="listitem"] [data-icon],
+#pane-side [role="listitem"] [data-testid*="avatar"],
+#pane-side [role="listitem"] [data-testid*="status"],
+#pane-side [role="listitem"] [data-testid*="unread"] {
+    display: none !important;
+}
+
+/* CHAT ROWS: remove rounded bubble look */
+#pane-side [role="listitem"],
+#side [role="listitem"],
+#pane-side [data-testid="cell-frame-container"],
+#side [data-testid="cell-frame-container"] {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+}
+
+#pane-side [role="listitem"] > div,
+#side [role="listitem"] > div,
+#pane-side [data-testid="cell-frame-container"] > div,
+#side [data-testid="cell-frame-container"] > div {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+#pane-side [role="listitem"] [style*="border-radius"],
+#side [role="listitem"] [style*="border-radius"] {
+    border-radius: 0 !important;
+}
+
+/* ULTRA FLAT SIDEBAR ROWS */
+#pane-side [role="listitem"],
+#side [role="listitem"] {
+    background-color: #000 !important;
+}
+
+#pane-side [role="listitem"] *,
+#side [role="listitem"] * {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+#pane-side [role="listitem"] [role="button"],
+#side [role="listitem"] [role="button"],
+#pane-side [role="listitem"] [tabindex],
+#side [role="listitem"] [tabindex] {
+    background: #000 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+#pane-side [role="listitem"]::before,
+#pane-side [role="listitem"]::after,
+#side [role="listitem"]::before,
+#side [role="listitem"]::after {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+/* WHATSAPP DOM-SPECIFIC: kill chat capsules (_ak72 etc) */
+#pane-side [role="row"],
+#pane-side [role="gridcell"],
+#pane-side [role="gridcell"] > div[tabindex="-1"],
+#pane-side ._ak72,
+#pane-side ._ak73,
+#pane-side ._asiw,
+#pane-side ._ap1-,
+#pane-side ._ap1_,
+#pane-side ._ak8n,
+#pane-side ._ak8h,
+#pane-side ._ak8l,
+#pane-side ._ak8o,
+#pane-side ._ak8q,
+#pane-side ._ak8j,
+#pane-side ._ak8k {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+#pane-side [role="row"] [style*="border-radius"],
+#pane-side [role="row"] [style*="background"] {
+    border-radius: 0 !important;
+    background: #000000 !important;
+    background-color: #000000 !important;
+}
+
+/* SIDEBAR HARD BLACK (search + filters + chat list) */
+#side,
+#side > div,
+#side [role="tablist"],
+#side [role="grid"],
+#side [role="row"],
+#side [role="gridcell"],
+#side [role="textbox"],
+#side button,
+#side [role="button"],
+#pane-side,
+#pane-side [role="row"],
+#pane-side [role="gridcell"],
+#pane-side [role="gridcell"] > div,
+#pane-side [class*="_ak"] {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    background-image: none !important;
+}
+
+#side [aria-selected="true"],
+#pane-side [aria-selected="true"],
+#pane-side [role="row"]:hover,
+#side [role="tab"]:hover {
+    background: #0e0e0e !important;
+    background-color: #0e0e0e !important;
+}
+
+#side *,
+#pane-side * {
+    border-color: #171717 !important;
+}
+
+/* PURE BLACK SIDEBAR (aggressive) */
+#side,
+#side *,
+#side *::before,
+#side *::after,
+#pane-side,
+#pane-side *,
+#pane-side *::before,
+#pane-side *::after {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    background-image: none !important;
+    box-shadow: none !important;
+}
+
+#side [role="textbox"],
+#side [contenteditable="true"],
+#side input,
+#side textarea,
+#side button {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    border-color: #000000 !important;
+}
+
+#side [role="tab"]:hover,
+#side [role="tab"][aria-pressed="true"],
+#pane-side [role="row"]:hover,
+#pane-side [aria-selected="true"] {
+    background: #000000 !important;
+    background-color: #000000 !important;
+}
+
+/* PURE BLACK CHAT AREA (panel + composer) */
+[role="main"],
+[data-testid="conversation-panel-wrapper"],
+[data-testid="conversation-panel-body"],
+[data-testid="conversation-panel-messages"],
+[data-testid="chat-history"],
+[data-testid="chat-shell"],
+[data-testid="chat-panel"],
+#main {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    background-image: none !important;
+}
+
+footer,
+footer > div,
+footer > div > div,
+footer [class*="_ak1r"],
+footer [class*="lexical-rich-text-input"],
+footer [role="textbox"],
+footer [contenteditable="true"],
+footer button,
+footer [role="button"] {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    background-image: none !important;
+    box-shadow: none !important;
+}
+
+footer [role="textbox"],
+footer [contenteditable="true"] {
+    border-color: #ffffff !important;
+}
+
+footer button,
+footer [role="button"] {
+    border-color: #000000 !important;
+}
+
+/* COMPOSER RESIDUE KILL (last-pass overrides) */
+footer,
+[data-testid="conversation-panel-wrapper"],
+[data-testid="conversation-panel-body"],
+[data-testid="conversation-panel-messages"] {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    border: 0 !important;
+    border-top: 0 !important;
+    box-shadow: none !important;
+}
+
+footer *,
+footer *::before,
+footer *::after {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    background-image: none !important;
+    border-color: #000000 !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+footer [role="textbox"],
+footer [contenteditable="true"],
+footer [data-testid="conversation-compose-box-input"] {
+    border: 1px solid #000000 !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+footer [role="textbox"]:focus,
+footer [contenteditable="true"]:focus,
+footer [data-testid="conversation-compose-box-input"]:focus-within {
+    border: 1px solid #000000 !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+footer button,
+footer [role="button"] {
+    border: 0 !important;
+    outline: none !important;
+}
